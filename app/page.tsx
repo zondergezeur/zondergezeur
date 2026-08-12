@@ -1,3 +1,5 @@
+import { ContactForm } from "./contact-form";
+
 const services = [
   {
     title: "Nieuwe websites",
@@ -166,13 +168,7 @@ export default function Home() {
           </p>
         </div>
         <div className="contact-panel">
-          <a className="mail-link" href="mailto:hallo@zondergezeur.nl">
-            hallo@zondergezeur.nl
-          </a>
-          <p>
-            De mailstroom is voorbereid op Resend, zodat contactformulieren en
-            bevestigingen later netjes via hetzelfde domein kunnen lopen.
-          </p>
+          <ContactForm />
         </div>
       </section>
     </main>

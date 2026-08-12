@@ -618,15 +618,92 @@ h3 {
   padding: clamp(1.2rem, 4vw, 2rem);
 }
 
-.mail-link {
-  display: block;
-  font-size: clamp(1.35rem, 3.1vw, 2.45rem);
+.contact-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.contact-form label {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.contact-form label span {
+  color: var(--ink);
+  font-size: 0.92rem;
+  font-weight: 850;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  appearance: none;
+  background: #f7fbf9;
+  border: 1px solid rgba(22, 33, 31, 0.14);
+  border-radius: 0.85rem;
+  color: var(--ink);
+  font: inherit;
+  min-height: 3.15rem;
+  outline: none;
+  padding: 0.9rem 1rem;
+  width: 100%;
+}
+
+.contact-form textarea {
+  line-height: 1.45;
+  resize: vertical;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  background: white;
+  border-color: var(--coral);
+  box-shadow: 0 0 0 0.22rem rgba(255, 123, 95, 0.18);
+}
+
+.form-honey {
+  display: none;
+}
+
+.form-submit {
+  background: var(--ink);
+  border: 0;
+  border-radius: 999px;
+  color: white;
+  cursor: pointer;
+  font: inherit;
   font-weight: 900;
-  letter-spacing: 0;
-  line-height: 1.05;
-  margin-bottom: 1rem;
-  overflow-wrap: break-word;
-  word-break: normal;
+  min-height: 3.3rem;
+  padding: 0.95rem 1.25rem;
+}
+
+.form-submit:hover {
+  background: var(--coral);
+  color: var(--ink);
+}
+
+.form-submit:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.form-status {
+  border-radius: 0.85rem;
+  font-size: 0.98rem;
+  font-weight: 750;
+  margin: 0;
+  padding: 0.85rem 1rem;
+}
+
+.form-status.success {
+  background: #ecfff4;
+  color: #236347;
+}
+
+.form-status.error {
+  background: #fff0eb;
+  color: #9a2d1d;
 }
 
 .contact-panel p {
@@ -701,10 +778,6 @@ h3 {
   .contact-section h2 {
     font-size: clamp(2.35rem, 13vw, 3.7rem);
     max-width: 9ch;
-  }
-
-  .mail-link {
-    font-size: clamp(1.15rem, 6.4vw, 1.9rem);
   }
 
   .mock-grid {
