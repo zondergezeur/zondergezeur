@@ -5,32 +5,13 @@ export const runtime = "nodejs";
 
 const forwardTo = "zondergezeur@gmail.com";
 const forwardFrom = "Zonder Gezeur <contact@zondergezeur.nl>";
-const acceptedRecipient = "contact@zondergezeur.nl";
 
 type EmailReceivedEvent = {
   type?: string;
   data?: {
     email_id?: string;
-    to?: unknown;
-    received_for?: unknown;
   };
 };
-
-function includesAcceptedRecipient(to: unknown) {
-  const values = Array.isArray(to) ? to : [to];
-
-  return values.some((value) => {
-    if (typeof value === "string") {
-      return value.toLowerCase().includes(acceptedRecipient);
-    }
-
-    if (value && typeof value === "object" && "email" in value) {
-      return String(value.email).toLowerCase() === acceptedRecipient;
-    }
-
-    return false;
-  });
-}
 
 export async function POST(request: NextRequest) {
   const apiKey = process.env.RESEND_API_KEY;
@@ -60,13 +41,6 @@ export async function POST(request: NextRequest) {
   }
 
   if (event.type !== "email.received") {
-    return NextResponse.json({ ok: true, ignored: true });
-  }
-
-  if (
-    !includesAcceptedRecipient(event.data?.to) &&
-    !includesAcceptedRecipient(event.data?.received_for)
-  ) {
     return NextResponse.json({ ok: true, ignored: true });
   }
 
