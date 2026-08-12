@@ -12,6 +12,7 @@ type EmailReceivedEvent = {
   data?: {
     email_id?: string;
     to?: unknown;
+    received_for?: unknown;
   };
 };
 
@@ -62,7 +63,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true, ignored: true });
   }
 
-  if (!includesAcceptedRecipient(event.data?.to)) {
+  if (
+    !includesAcceptedRecipient(event.data?.to) &&
+    !includesAcceptedRecipient(event.data?.received_for)
+  ) {
     return NextResponse.json({ ok: true, ignored: true });
   }
 
