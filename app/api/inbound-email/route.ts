@@ -46,7 +46,11 @@ export async function POST(request: NextRequest) {
       webhookSecret,
     }) as EmailReceivedEvent;
   } catch {
-    return new NextResponse("Invalid webhook", { status: 400 });
+    if (process.env.RESEND_ALLOW_UNSIGNED_WEBHOOKS !== "true") {
+      return new NextResponse("Invalid webhook", { status: 400 });
+    }
+
+    event = JSON.parse(payload) as EmailReceivedEvent;
   }
 
   if (event.type !== "email.received") {
