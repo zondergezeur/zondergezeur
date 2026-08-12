@@ -30,9 +30,18 @@ export async function POST(request: NextRequest) {
     event = resend.webhooks.verify({
       payload,
       headers: {
-        id: request.headers.get("svix-id") ?? "",
-        timestamp: request.headers.get("svix-timestamp") ?? "",
-        signature: request.headers.get("svix-signature") ?? "",
+        id:
+          request.headers.get("webhook-id") ??
+          request.headers.get("svix-id") ??
+          "",
+        timestamp:
+          request.headers.get("webhook-timestamp") ??
+          request.headers.get("svix-timestamp") ??
+          "",
+        signature:
+          request.headers.get("webhook-signature") ??
+          request.headers.get("svix-signature") ??
+          "",
       },
       webhookSecret,
     }) as EmailReceivedEvent;
