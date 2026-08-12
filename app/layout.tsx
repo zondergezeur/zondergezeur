@@ -18,8 +18,9 @@ export const metadata: Metadata = {
   description:
     "Frisse, snelle websites voor ondernemers, verenigingen en projecten. Helder geregeld van eerste idee tot livegang.",
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
+    icon: "/logo-zg.png",
+    shortcut: "/logo-zg.png",
+    apple: "/logo-zg.png",
   },
   openGraph: {
     title: "Zonder Gezeur",
