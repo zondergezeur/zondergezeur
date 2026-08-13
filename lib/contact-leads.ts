@@ -9,6 +9,7 @@ export type ContactLead = {
   message: string;
   status: LeadStatus;
   source: string;
+  follow_ups: ContactLeadFollowUp[];
 };
 
 export type NewContactLead = {
@@ -17,6 +18,24 @@ export type NewContactLead = {
   topic: string;
   message: string;
   source?: string;
+};
+
+export type ContactLeadFollowUp = {
+  id: string;
+  contact_lead_id: string;
+  created_at: string;
+  to_email: string;
+  subject: string;
+  message: string;
+  resend_email_id: string | null;
+};
+
+export type NewContactLeadFollowUp = {
+  contactLeadId: string;
+  toEmail: string;
+  subject: string;
+  message: string;
+  resendEmailId?: string | null;
 };
 
 type SupabaseConfig = {
@@ -87,11 +106,46 @@ export async function saveContactLead(lead: NewContactLead) {
   return { ok: true, skipped: false };
 }
 
+export async function saveContactLeadFollowUp(followUp: NewContactLeadFollowUp) {
+  const config = getSupabaseConfig();
+
+  if (!config) {
+    return { ok: false, skipped: true };
+  }
+
+  const response = await fetch(`${config.restUrl}/contact_lead_follow_ups`, {
+    method: "POST",
+    headers: {
+      ...supabaseHeaders(config),
+      prefer: "return=minimal",
+    },
+    body: JSON.stringify({
+      contact_lead_id: followUp.contactLeadId,
+      to_email: followUp.toEmail,
+      subject: followUp.subject,
+      message: followUp.message,
+      resend_email_id: followUp.resendEmailId ?? null,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text().catch(() => "");
+    console.error("Follow-up storage failed", response.status, errorText);
+    return { ok: false, skipped: false };
+  }
+
+  return { ok: true, skipped: false };
+}
+
 export async function getContactLeads(limit = 50) {
   const config = getSupabaseConfig();
 
   if (!config) {
-    return { configured: false, leads: [] as ContactLead[] };
+    return {
+      configured: false,
+      followUpsConfigured: false,
+      leads: [] as ContactLead[],
+    };
   }
 
   const params = new URLSearchParams({
@@ -110,6 +164,53 @@ export async function getContactLeads(limit = 50) {
     throw new Error(`Leads ophalen mislukt (${response.status}): ${errorText}`);
   }
 
-  const leads = (await response.json()) as ContactLead[];
-  return { configured: true, leads };
+  const leads = ((await response.json()) as Omit<ContactLead, "follow_ups">[]).map(
+    (lead) => ({ ...lead, follow_ups: [] }),
+  );
+
+  if (!leads.length) {
+    return { configured: true, followUpsConfigured: true, leads };
+  }
+
+  const followUpParams = new URLSearchParams({
+    select: "id,contact_lead_id,created_at,to_email,subject,message,resend_email_id",
+    order: "created_at.desc",
+  });
+
+  followUpParams.set(
+    "contact_lead_id",
+    `in.(${leads.map((lead) => `"${lead.id}"`).join(",")})`,
+  );
+
+  const followUpsResponse = await fetch(
+    `${config.restUrl}/contact_lead_follow_ups?${followUpParams}`,
+    {
+      headers: supabaseHeaders(config),
+      cache: "no-store",
+    },
+  );
+
+  if (!followUpsResponse.ok) {
+    const errorText = await followUpsResponse.text().catch(() => "");
+    console.error("Follow-ups ophalen mislukt", followUpsResponse.status, errorText);
+    return { configured: true, followUpsConfigured: false, leads };
+  }
+
+  const followUps = (await followUpsResponse.json()) as ContactLeadFollowUp[];
+  const followUpsByLead = new Map<string, ContactLeadFollowUp[]>();
+
+  for (const followUp of followUps) {
+    const items = followUpsByLead.get(followUp.contact_lead_id) ?? [];
+    items.push(followUp);
+    followUpsByLead.set(followUp.contact_lead_id, items);
+  }
+
+  return {
+    configured: true,
+    followUpsConfigured: true,
+    leads: leads.map((lead) => ({
+      ...lead,
+      follow_ups: followUpsByLead.get(lead.id) ?? [],
+    })),
+  };
 }

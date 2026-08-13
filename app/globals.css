@@ -1144,6 +1144,59 @@ h3 {
   padding: 0.85rem 1.15rem;
 }
 
+.follow-up-history {
+  border-top: 1px solid var(--line);
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+}
+
+.follow-up-history h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.85rem;
+}
+
+.follow-up-history > p {
+  background: #f7fbf9;
+  border: 1px dashed rgba(22, 33, 31, 0.2);
+  border-radius: 0.9rem;
+  color: var(--muted);
+  font-weight: 750;
+  padding: 0.9rem 1rem;
+}
+
+.follow-up-history article {
+  background:
+    linear-gradient(90deg, rgba(66, 217, 200, 0.22) 0 0.45rem, transparent 0.45rem),
+    #f7fbf9;
+  border: 1px solid rgba(22, 33, 31, 0.1);
+  border-radius: 0.9rem;
+  padding: 1rem 1rem 1rem 1.25rem;
+}
+
+.follow-up-history article + article {
+  margin-top: 0.75rem;
+}
+
+.follow-up-history-top {
+  align-items: start;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 0.65rem;
+}
+
+.follow-up-history-top strong {
+  color: var(--ink);
+  line-height: 1.25;
+}
+
+.follow-up-history-top span {
+  color: var(--muted);
+  flex: 0 0 auto;
+  font-size: 0.85rem;
+  font-weight: 750;
+}
+
 @media (max-width: 880px) {
   .site-header {
     align-items: stretch;
@@ -1190,7 +1243,8 @@ h3 {
   }
 
   .admin-dashboard-header,
-  .lead-card-top {
+  .lead-card-top,
+  .follow-up-history-top {
     display: grid;
   }
 

@@ -53,6 +53,10 @@ function mailStatusText(status: string | undefined) {
     return "Follow-up is verstuurd.";
   }
 
+  if (status === "sent-not-stored") {
+    return "Follow-up is verstuurd, maar nog niet opgeslagen in de geschiedenis.";
+  }
+
   if (status === "missing-config") {
     return "Mail is nog niet geconfigureerd.";
   }
@@ -78,9 +82,13 @@ export default async function BeheerPage({ searchParams }: BeheerPageProps) {
   }
 
   const storageConfigured = hasLeadStorageConfig();
-  const { leads } = await getContactLeads();
+  const { leads, followUpsConfigured } = await getContactLeads();
   const newLeadCount = leads.filter((lead) => lead.status === "new").length;
   const mailStatus = mailStatusText(resolvedSearchParams?.mail);
+  const followUpCount = leads.reduce(
+    (total, lead) => total + lead.follow_ups.length,
+    0,
+  );
 
   return (
     <main className="admin-shell">
@@ -110,8 +118,8 @@ export default async function BeheerPage({ searchParams }: BeheerPageProps) {
             <p>nieuw</p>
           </div>
           <div>
-            <span>{storageConfigured ? "Actief" : "Nog niet"}</span>
-            <p>database</p>
+            <span>{followUpCount}</span>
+            <p>follow-ups</p>
           </div>
         </div>
 
@@ -121,6 +129,13 @@ export default async function BeheerPage({ searchParams }: BeheerPageProps) {
             <strong>SUPABASE_URL</strong> en{" "}
             <strong>SUPABASE_SERVICE_ROLE_KEY</strong> om inzendingen op te
             slaan en hier te tonen.
+          </div>
+        ) : null}
+
+        {storageConfigured && !followUpsConfigured ? (
+          <div className="admin-notice">
+            Follow-upgeschiedenis is nog niet ingesteld. Draai eerst{" "}
+            <strong>db/002_contact_lead_follow_ups.sql</strong> in Supabase.
           </div>
         ) : null}
 
@@ -152,6 +167,11 @@ export default async function BeheerPage({ searchParams }: BeheerPageProps) {
                 <details className="follow-up-panel">
                   <summary>Follow-up mail maken</summary>
                   <form action={sendFollowUpAction}>
+                    <input
+                      name="contactLeadId"
+                      type="hidden"
+                      value={lead.id}
+                    />
                     <input name="email" type="hidden" value={lead.email} />
                     <input name="name" type="hidden" value={lead.name} />
                     <label>
@@ -175,6 +195,22 @@ export default async function BeheerPage({ searchParams }: BeheerPageProps) {
                     <button type="submit">Verstuur mooie follow-up</button>
                   </form>
                 </details>
+                <div className="follow-up-history">
+                  <h3>Follow-ups</h3>
+                  {lead.follow_ups.length ? (
+                    lead.follow_ups.map((followUp) => (
+                      <article key={followUp.id}>
+                        <div className="follow-up-history-top">
+                          <strong>{followUp.subject}</strong>
+                          <span>{formatDate(followUp.created_at)}</span>
+                        </div>
+                        <p>{followUp.message}</p>
+                      </article>
+                    ))
+                  ) : (
+                    <p>Nog geen follow-up verstuurd.</p>
+                  )}
+                </div>
               </article>
             ))
           ) : (

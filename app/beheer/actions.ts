@@ -10,6 +10,7 @@ import {
   verifyAdminSessionToken,
   verifyPassword,
 } from "../../lib/admin-auth";
+import { saveContactLeadFollowUp } from "../../lib/contact-leads";
 import { emailShell, escapeHtml, htmlToPlainText, paragraphsToHtml } from "../../lib/email-template";
 
 const fromEmail = "Zonder Gezeur <contact@zondergezeur.nl>";
@@ -67,10 +68,11 @@ export async function sendFollowUpAction(formData: FormData) {
 
   const to = clean(formData.get("email")).toLowerCase();
   const name = clean(formData.get("name"));
+  const contactLeadId = clean(formData.get("contactLeadId"));
   const subject = clean(formData.get("subject"));
   const message = clean(formData.get("message"));
 
-  if (!to || !name || !subject || !message || !isValidEmail(to)) {
+  if (!to || !name || !contactLeadId || !subject || !message || !isValidEmail(to)) {
     redirect("/beheer?mail=invalid");
   }
 
@@ -96,6 +98,18 @@ export async function sendFollowUpAction(formData: FormData) {
   if (result.error) {
     console.error("Follow-up mail failed", result.error);
     redirect("/beheer?mail=error");
+  }
+
+  const storageResult = await saveContactLeadFollowUp({
+    contactLeadId,
+    toEmail: to,
+    subject,
+    message,
+    resendEmailId: result.data?.id ?? null,
+  });
+
+  if (!storageResult.ok) {
+    redirect("/beheer?mail=sent-not-stored");
   }
 
   redirect("/beheer?mail=sent");
