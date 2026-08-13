@@ -16,3 +16,4 @@ create index if not exists contact_lead_follow_ups_lead_created_idx
 alter table public.contact_lead_follow_ups enable row level security;
 
 revoke all on table public.contact_lead_follow_ups from anon, authenticated;
+grant select, insert on table public.contact_lead_follow_ups to service_role;

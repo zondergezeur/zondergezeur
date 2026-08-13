@@ -58,16 +58,11 @@ function getSupabaseConfig(): SupabaseConfig | null {
 }
 
 function supabaseHeaders(config: SupabaseConfig) {
-  const headers: Record<string, string> = {
+  return {
     apikey: config.serviceRoleKey,
+    authorization: `Bearer ${config.serviceRoleKey}`,
     "content-type": "application/json",
   };
-
-  if (!config.serviceRoleKey.startsWith("sb_secret_")) {
-    headers.authorization = `Bearer ${config.serviceRoleKey}`;
-  }
-
-  return headers;
 }
 
 export function hasLeadStorageConfig() {

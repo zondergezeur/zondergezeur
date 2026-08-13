@@ -13,3 +13,4 @@ create table if not exists public.contact_leads (
 alter table public.contact_leads enable row level security;
 
 revoke all on table public.contact_leads from anon, authenticated;
+grant select, insert, update on table public.contact_leads to service_role;
