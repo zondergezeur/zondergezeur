@@ -154,64 +154,80 @@ export default async function BeheerPage({ searchParams }: BeheerPageProps) {
         <div className="lead-list">
           {leads.length ? (
             leads.map((lead) => (
-              <article className="lead-card" key={lead.id}>
-                <div className="lead-card-top">
+              <details className="lead-card" key={lead.id}>
+                <summary className="lead-card-summary">
                   <div>
                     <h2>{lead.name}</h2>
-                    <a href={`mailto:${lead.email}`}>{lead.email}</a>
+                    <span>{lead.topic}</span>
                   </div>
-                  <span>{formatDate(lead.created_at)}</span>
-                </div>
-                <div className="lead-topic">{lead.topic}</div>
-                <p>{lead.message}</p>
-                <details className="follow-up-panel">
-                  <summary>Follow-up mail maken</summary>
-                  <form action={sendFollowUpAction}>
-                    <input
-                      name="contactLeadId"
-                      type="hidden"
-                      value={lead.id}
-                    />
-                    <input name="email" type="hidden" value={lead.email} />
-                    <input name="name" type="hidden" value={lead.name} />
-                    <label>
-                      <span>Onderwerp</span>
+                  <div className="lead-card-meta">
+                    <span>{formatDate(lead.created_at)}</span>
+                    <strong>
+                      {lead.follow_ups.length
+                        ? `${lead.follow_ups.length} follow-up${lead.follow_ups.length === 1 ? "" : "s"}`
+                        : "geen follow-up"}
+                    </strong>
+                  </div>
+                </summary>
+                <div className="lead-card-body">
+                  <div className="lead-card-top">
+                    <div>
+                      <h3>Bericht van {lead.name}</h3>
+                      <a href={`mailto:${lead.email}`}>{lead.email}</a>
+                    </div>
+                    <span>{formatDate(lead.created_at)}</span>
+                  </div>
+                  <div className="lead-topic">{lead.topic}</div>
+                  <p>{lead.message}</p>
+                  <div className="follow-up-history">
+                    <h3>Follow-ups</h3>
+                    {lead.follow_ups.length ? (
+                      lead.follow_ups.map((followUp) => (
+                        <article key={followUp.id}>
+                          <div className="follow-up-history-top">
+                            <strong>{followUp.subject}</strong>
+                            <span>{formatDate(followUp.created_at)}</span>
+                          </div>
+                          <p>{followUp.message}</p>
+                        </article>
+                      ))
+                    ) : (
+                      <p>Nog geen follow-up verstuurd.</p>
+                    )}
+                  </div>
+                  <details className="follow-up-panel">
+                    <summary>Follow-up mail maken</summary>
+                    <form action={sendFollowUpAction}>
                       <input
-                        defaultValue={`Re: ${lead.topic}`}
-                        name="subject"
-                        required
-                        type="text"
+                        name="contactLeadId"
+                        type="hidden"
+                        value={lead.id}
                       />
-                    </label>
-                    <label>
-                      <span>Bericht</span>
-                      <textarea
-                        defaultValue={`Hoi ${lead.name},\n\nDank je wel voor je bericht via Zonder Gezeur. Ik heb even meegekeken en denk graag met je mee.\n\nZullen we binnenkort kort bellen om je website door te nemen?\n\nGroet,\nZonder Gezeur`}
-                        name="message"
-                        required
-                        rows={8}
-                      />
-                    </label>
-                    <button type="submit">Verstuur mooie follow-up</button>
-                  </form>
-                </details>
-                <div className="follow-up-history">
-                  <h3>Follow-ups</h3>
-                  {lead.follow_ups.length ? (
-                    lead.follow_ups.map((followUp) => (
-                      <article key={followUp.id}>
-                        <div className="follow-up-history-top">
-                          <strong>{followUp.subject}</strong>
-                          <span>{formatDate(followUp.created_at)}</span>
-                        </div>
-                        <p>{followUp.message}</p>
-                      </article>
-                    ))
-                  ) : (
-                    <p>Nog geen follow-up verstuurd.</p>
-                  )}
+                      <input name="email" type="hidden" value={lead.email} />
+                      <input name="name" type="hidden" value={lead.name} />
+                      <label>
+                        <span>Onderwerp</span>
+                        <input
+                          defaultValue={`Re: ${lead.topic}`}
+                          name="subject"
+                          required
+                          type="text"
+                        />
+                      </label>
+                      <label>
+                        <span>Bericht</span>
+                        <textarea
+                          defaultValue={`Hoi ${lead.name},\n\nDank je wel voor je bericht via Zonder Gezeur. Ik heb even meegekeken en denk graag met je mee.\n\nZullen we binnenkort kort bellen om je website door te nemen?\n\nGroet,\nZonder Gezeur`}
+                          name="message"
+                          required
+                          rows={8}
+                        />
+                      </label>
+                      <button type="submit">Verstuur mooie follow-up</button>
+                    </form>
+                  </details>
                 </div>
-              </article>
+              </details>
             ))
           ) : (
             <div className="admin-empty">
