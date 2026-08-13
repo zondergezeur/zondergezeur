@@ -1,11 +1,12 @@
 import { cookies } from "next/headers";
-import { loginAction, logoutAction } from "./actions";
+import { loginAction, logoutAction, sendFollowUpAction } from "./actions";
 import { cookieName, hasAdminConfig, verifyAdminSessionToken } from "../../lib/admin-auth";
 import { getContactLeads, hasLeadStorageConfig } from "../../lib/contact-leads";
 
 type BeheerPageProps = {
   searchParams?: Promise<{
     error?: string;
+    mail?: string;
   }>;
 };
 
@@ -47,6 +48,26 @@ function LoginPanel({ hasError }: { hasError: boolean }) {
   );
 }
 
+function mailStatusText(status: string | undefined) {
+  if (status === "sent") {
+    return "Follow-up is verstuurd.";
+  }
+
+  if (status === "missing-config") {
+    return "Mail is nog niet geconfigureerd.";
+  }
+
+  if (status === "invalid") {
+    return "Controleer ontvanger, onderwerp en bericht.";
+  }
+
+  if (status === "error") {
+    return "Versturen is niet gelukt. Probeer het later opnieuw.";
+  }
+
+  return "";
+}
+
 export default async function BeheerPage({ searchParams }: BeheerPageProps) {
   const cookieStore = await cookies();
   const isLoggedIn = verifyAdminSessionToken(cookieStore.get(cookieName)?.value);
@@ -59,6 +80,7 @@ export default async function BeheerPage({ searchParams }: BeheerPageProps) {
   const storageConfigured = hasLeadStorageConfig();
   const { leads } = await getContactLeads();
   const newLeadCount = leads.filter((lead) => lead.status === "new").length;
+  const mailStatus = mailStatusText(resolvedSearchParams?.mail);
 
   return (
     <main className="admin-shell">
@@ -102,6 +124,18 @@ export default async function BeheerPage({ searchParams }: BeheerPageProps) {
           </div>
         ) : null}
 
+        {mailStatus ? (
+          <div
+            className={
+              resolvedSearchParams?.mail === "sent"
+                ? "admin-success"
+                : "admin-error"
+            }
+          >
+            {mailStatus}
+          </div>
+        ) : null}
+
         <div className="lead-list">
           {leads.length ? (
             leads.map((lead) => (
@@ -115,6 +149,32 @@ export default async function BeheerPage({ searchParams }: BeheerPageProps) {
                 </div>
                 <div className="lead-topic">{lead.topic}</div>
                 <p>{lead.message}</p>
+                <details className="follow-up-panel">
+                  <summary>Follow-up mail maken</summary>
+                  <form action={sendFollowUpAction}>
+                    <input name="email" type="hidden" value={lead.email} />
+                    <input name="name" type="hidden" value={lead.name} />
+                    <label>
+                      <span>Onderwerp</span>
+                      <input
+                        defaultValue={`Re: ${lead.topic}`}
+                        name="subject"
+                        required
+                        type="text"
+                      />
+                    </label>
+                    <label>
+                      <span>Bericht</span>
+                      <textarea
+                        defaultValue={`Hoi ${lead.name},\n\nDank je wel voor je bericht via Zonder Gezeur. Ik heb even meegekeken en denk graag met je mee.\n\nZullen we binnenkort kort bellen om je website door te nemen?\n\nGroet,\nZonder Gezeur`}
+                        name="message"
+                        required
+                        rows={8}
+                      />
+                    </label>
+                    <button type="submit">Verstuur mooie follow-up</button>
+                  </form>
+                </details>
               </article>
             ))
           ) : (

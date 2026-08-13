@@ -930,6 +930,7 @@ h3 {
   color: var(--ink);
 }
 
+.admin-success,
 .admin-error,
 .admin-notice,
 .admin-empty {
@@ -937,6 +938,12 @@ h3 {
   font-weight: 750;
   line-height: 1.5;
   padding: 1rem;
+}
+
+.admin-success {
+  background: #ecfff4;
+  color: #236347;
+  margin: 1rem 0;
 }
 
 .admin-error {
@@ -1040,6 +1047,101 @@ h3 {
   line-height: 1.58;
   margin-bottom: 0;
   white-space: pre-wrap;
+}
+
+.follow-up-panel {
+  background:
+    linear-gradient(90deg, rgba(255, 211, 107, 0.32) 0 0.55rem, transparent 0.55rem),
+    #fffaf2;
+  border: 1px solid rgba(22, 33, 31, 0.1);
+  border-radius: 1rem;
+  margin-top: 1.25rem;
+  overflow: hidden;
+}
+
+.follow-up-panel summary {
+  align-items: center;
+  cursor: pointer;
+  display: grid;
+  font-weight: 900;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) 2.15rem;
+  list-style: none;
+  padding: 1rem 1rem 1rem 1.45rem;
+}
+
+.follow-up-panel summary::-webkit-details-marker {
+  display: none;
+}
+
+.follow-up-panel summary::marker {
+  content: "";
+  font-size: 0;
+}
+
+.follow-up-panel summary::after {
+  align-items: center;
+  background: var(--yellow);
+  border-radius: 50%;
+  color: var(--ink);
+  content: "+";
+  display: inline-flex;
+  font-size: 1.3rem;
+  font-weight: 900;
+  height: 2.15rem;
+  justify-content: center;
+  line-height: 1;
+  width: 2.15rem;
+}
+
+.follow-up-panel[open] summary::after {
+  background: var(--ink);
+  color: white;
+  content: "-";
+}
+
+.follow-up-panel form {
+  display: grid;
+  gap: 1rem;
+  padding: 0 1rem 1rem 1.45rem;
+}
+
+.follow-up-panel label {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.follow-up-panel label span {
+  font-size: 0.9rem;
+  font-weight: 850;
+}
+
+.follow-up-panel input,
+.follow-up-panel textarea {
+  background: white;
+  border: 1px solid rgba(22, 33, 31, 0.14);
+  border-radius: 0.85rem;
+  color: var(--ink);
+  font: inherit;
+  padding: 0.9rem 1rem;
+  width: 100%;
+}
+
+.follow-up-panel textarea {
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.follow-up-panel button {
+  background: var(--ink);
+  border: 0;
+  border-radius: 999px;
+  color: white;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 900;
+  min-height: 3.1rem;
+  padding: 0.85rem 1.15rem;
 }
 
 @media (max-width: 880px) {
