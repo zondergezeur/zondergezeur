@@ -1418,6 +1418,11 @@ h3 {
     scroll-margin-top: 0.9rem;
   }
 
+  .pricing-section,
+  .faq-section {
+    scroll-margin-top: 4.75rem;
+  }
+
   .hero,
   .split-section,
   .case-section,
