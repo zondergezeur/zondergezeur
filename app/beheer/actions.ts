@@ -11,7 +11,7 @@ import {
   verifyPassword,
 } from "../../lib/admin-auth";
 import { saveContactLeadFollowUp } from "../../lib/contact-leads";
-import { emailShell, escapeHtml, htmlToPlainText, paragraphsToHtml } from "../../lib/email-template";
+import { emailShell, htmlToPlainText, paragraphsToHtml } from "../../lib/email-template";
 
 const fromEmail = "Zonder Gezeur <contact@zondergezeur.nl>";
 const replyToEmail = "contact@zondergezeur.nl";
@@ -77,9 +77,7 @@ export async function sendFollowUpAction(formData: FormData) {
   }
 
   const resend = new Resend(apiKey);
-  const safeName = escapeHtml(name);
   const bodyHtml = emailShell(`
-    <p style="margin:0 0 18px;font-size:18px;line-height:1.55;color:#16211f;">Hoi ${safeName},</p>
     ${paragraphsToHtml(message)}
     <div style="background:#ecfff4;border-left:5px solid #42d9c8;border-radius:12px;margin-top:24px;padding:18px;font-size:15px;line-height:1.6;color:#5e6b67;">
       Je kunt op deze mail reageren als je nog iets wilt aanvullen.
@@ -92,7 +90,7 @@ export async function sendFollowUpAction(formData: FormData) {
     replyTo: replyToEmail,
     subject,
     html: bodyHtml,
-    text: `Hoi ${name},\n\n${htmlToPlainText(paragraphsToHtml(message))}\n\nJe kunt op deze mail reageren als je nog iets wilt aanvullen.`,
+    text: `${htmlToPlainText(paragraphsToHtml(message))}\n\nJe kunt op deze mail reageren als je nog iets wilt aanvullen.`,
   });
 
   if (result.error) {
