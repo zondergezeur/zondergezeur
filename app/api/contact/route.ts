@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import { saveContactLead } from "../../../lib/contact-leads";
 
 export const runtime = "nodejs";
 
@@ -87,6 +88,17 @@ export async function POST(request: NextRequest) {
   const safeTopic = escapeHtml(topic);
   const safeMessage = escapeHtml(message).replaceAll("\n", "<br />");
   const subject = `Nieuw bericht via Zonder Gezeur: ${topic}`;
+
+  try {
+    await saveContactLead({
+      name,
+      email,
+      topic,
+      message,
+    });
+  } catch (error) {
+    console.error("Contact lead storage failed", error);
+  }
 
   const ownerHtml = emailShell(`
     <p style="margin:0 0 18px;font-size:18px;line-height:1.55;color:#5e6b67;">Er is een nieuw bericht binnengekomen via het formulier op zondergezeur.nl.</p>
