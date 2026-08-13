@@ -1,5 +1,6 @@
 import { ContactForm } from "./contact-form";
 import { MobileMenu } from "./mobile-menu";
+import { ScrollTopButton } from "./scroll-top-button";
 
 const services = [
   {
@@ -269,6 +270,7 @@ export default function Home() {
           zodra de definitieve gegevens vaststaan.
         </p>
       </footer>
+      <ScrollTopButton />
     </main>
   );
 }

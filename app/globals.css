@@ -48,7 +48,7 @@ main {
 .site-header {
   align-items: center;
   backdrop-filter: blur(16px);
-  background: rgba(251, 255, 248, 0.9);
+  background: rgba(251, 255, 248, 0.96);
   border: 1px solid var(--line);
   border-radius: 999px;
   display: flex;
@@ -165,6 +165,49 @@ main {
 
 .mobile-menu nav a:hover {
   background: var(--coral);
+}
+
+.scroll-top-button {
+  align-items: center;
+  background: var(--ink);
+  border: 1px solid rgba(251, 255, 248, 0.55);
+  border-radius: 999px;
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  box-shadow: 0 1rem 2.5rem rgba(22, 33, 31, 0.22);
+  color: var(--paper);
+  cursor: pointer;
+  display: flex;
+  font-size: 1.45rem;
+  font-weight: 900;
+  height: 3.25rem;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  transform: translateY(0.75rem) scale(0.94);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    background 180ms ease;
+  width: 3.25rem;
+  z-index: 30;
+}
+
+.scroll-top-button:hover {
+  background: var(--coral);
+  color: var(--ink);
+}
+
+.scroll-top-button.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.scroll-top-button span {
+  display: block;
+  transform: translateY(-0.08rem);
 }
 
 .hero {
@@ -1341,6 +1384,8 @@ h3 {
 
 @media (max-width: 880px) {
   .site-header {
+    background: var(--paper);
+    box-shadow: 0 0.8rem 2rem rgba(22, 33, 31, 0.08);
     border-radius: 999px;
     gap: 0.75rem;
     padding: 0.55rem 0.6rem;
@@ -1360,7 +1405,7 @@ h3 {
   .case-section,
   .faq-section,
   .contact-section {
-    scroll-margin-top: 9rem;
+    scroll-margin-top: 7.6rem;
   }
 
   .hero,
