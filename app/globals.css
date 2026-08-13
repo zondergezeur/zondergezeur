@@ -530,6 +530,7 @@ h3 {
   margin: 0 auto;
   max-width: 1180px;
   padding: clamp(4.5rem, 10vw, 7rem) 1rem;
+  scroll-margin-top: 7rem;
 }
 
 .section-heading {
@@ -1352,6 +1353,14 @@ h3 {
 
   .mobile-menu {
     display: block;
+  }
+
+  .section,
+  .split-section,
+  .case-section,
+  .faq-section,
+  .contact-section {
+    scroll-margin-top: 9rem;
   }
 
   .hero,
