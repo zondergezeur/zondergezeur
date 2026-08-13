@@ -1383,6 +1383,16 @@ h3 {
 }
 
 @media (max-width: 880px) {
+  body::before {
+    background: var(--paper);
+    content: "";
+    height: 5.55rem;
+    inset: 0 0 auto;
+    pointer-events: none;
+    position: fixed;
+    z-index: 19;
+  }
+
   .site-header {
     background: var(--paper);
     box-shadow: 0 0.8rem 2rem rgba(22, 33, 31, 0.08);
@@ -1405,7 +1415,7 @@ h3 {
   .case-section,
   .faq-section,
   .contact-section {
-    scroll-margin-top: 7.6rem;
+    scroll-margin-top: 0.9rem;
   }
 
   .hero,
