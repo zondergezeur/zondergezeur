@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://zondergezeur.nl"),
-  title: "Zonder Gezeur | Websites bouwen zonder gedoe",
+  title: "Zonder Gezeur | Campingwebsites zonder gedoe",
   description:
-    "Frisse, snelle websites voor ondernemers, verenigingen en projecten. Helder geregeld van eerste idee tot livegang.",
+    "Snelle, overzichtelijke websites speciaal voor Nederlandse campings. Helder geregeld van eerste schets tot livegang.",
   icons: {
     icon: [
       { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Zonder Gezeur",
-    description: "Een mooie website zonder eindeloos gedoe.",
+    description: "Campingwebsites die gasten makkelijk gebruiken.",
     type: "website",
     locale: "nl_NL",
     images: [
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Zonder Gezeur",
-    description: "Websites bouwen zonder gedoe.",
+    description: "Campingwebsites zonder gedoe.",
     images: ["/og.png"],
   },
 };

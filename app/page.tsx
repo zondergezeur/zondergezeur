@@ -2,16 +2,31 @@ import { ContactForm } from "./contact-form";
 
 const services = [
   {
-    title: "Nieuwe websites",
-    text: "Van eerste idee naar een snelle, verzorgde site die werkt op telefoon, tablet en desktop.",
+    title: "Nieuw gebouwd",
+    text: "Een frisse website die goed werkt op telefoon, tablet en desktop.",
   },
   {
-    title: "Vernieuwen wat er al is",
-    text: "Een bestaande site opschonen, moderniseren en duidelijker maken zonder alles onnodig ingewikkeld te maken.",
+    title: "Opnieuw opgezet",
+    text: "Een bestaande website duidelijker, mooier en makkelijker vindbaar maken.",
   },
   {
-    title: "Online zetten en beheren",
-    text: "GitHub voor versiebeheer, Vercel voor hosting en Resend voor nette contact- en servicemails.",
+    title: "Snel aangepast",
+    text: "Kleine wijzigingen gewoon snel geregeld, zonder lange wachttijden.",
+  },
+];
+
+const campingProblems = [
+  {
+    title: "Zelf bouwen kost tijd",
+    text: "Je wilt wel een goede website, maar hebt geen zin om avonden te verdwalen in technische keuzes.",
+  },
+  {
+    title: "Simpel wordt vaak rommelig",
+    text: "Een snelle doe-het-zelf-site staat online, maar oogt al snel onduidelijk of verouderd.",
+  },
+  {
+    title: "Vindbaar zijn is lastig",
+    text: "Gasten moeten je camping kunnen vinden, snappen en vertrouwen voordat ze contact opnemen.",
   },
 ];
 
@@ -29,6 +44,33 @@ const proofPoints = [
   "Preview-links voordat iets live gaat",
 ];
 
+const faqs = [
+  {
+    question: "Blijf ik eigenaar van mijn website?",
+    answer:
+      "Ja. De website hoort bij jou. Ik zorg dat alles netjes wordt ingericht en leg duidelijk uit waar je site staat.",
+  },
+  {
+    question: "Hoe regel ik kleine wijzigingen?",
+    answer:
+      "Stuur gewoon door wat aangepast moet worden. Kleine wijzigingen pak ik snel op, zodat je er zelf niet mee hoeft te puzzelen.",
+  },
+  {
+    question: "Hoe lang duurt het van start tot livegang?",
+    answer:
+      "Gemiddeld 2 tot 4 weken, afhankelijk van hoe snel content wordt aangeleverd.",
+  },
+  {
+    question: "Wat kost het maandelijks aan hosting en onderhoud?",
+    answer: "De prijzen volgen later. We maken dit straks duidelijk en overzichtelijk.",
+  },
+  {
+    question: "Werkt de site ook goed op mobiel?",
+    answer:
+      "Ja. De meeste campinggasten zoeken en boeken vanaf hun telefoon, dus dat is het uitgangspunt, niet een extra.",
+  },
+];
+
 export default function Home() {
   return (
     <main>
@@ -41,6 +83,8 @@ export default function Home() {
           <a href="#websites">Websites</a>
           <a href="#werkwijze">Werkwijze</a>
           <a href="#voorbeeld">Voorbeeld</a>
+          <a href="#prijzen">Prijzen</a>
+          <a href="#vragen">Vragen</a>
           <a href="#contact">Contact</a>
         </nav>
       </header>
@@ -53,18 +97,18 @@ export default function Home() {
           <span className="art-blue" />
         </div>
         <div className="hero-copy">
-          <p className="eyebrow">Websites bouwen, helder geregeld</p>
-          <h1>Een mooie website zonder eindeloos gedoe.</h1>
+          <p className="eyebrow">Websites voor campings</p>
+          <h1>Een site die gasten vertrouwen.</h1>
           <p className="hero-lead">
-            Zonder Gezeur maakt frisse, snelle websites voor ondernemers,
-            verenigingen en projecten die goed voor de dag willen komen.
+            Zonder Gezeur bouwt en vernieuwt websites voor campings. Helder,
+            snel en goed vindbaar, zonder gedoe of maanden wachten.
           </p>
           <div className="hero-actions">
             <a className="button primary" href="#contact">
               Plan een eerste gesprek
             </a>
             <a className="button secondary" href="#voorbeeld">
-              Bekijk de aanpak
+              Bekijk het voorbeeld
             </a>
           </div>
         </div>
@@ -81,8 +125,8 @@ export default function Home() {
           </div>
           <div className="mock-site">
             <div className="mock-hero">
-              <span>Nieuw project</span>
-              <strong>Helder. Snel. Mooi.</strong>
+              <span>Camping preview</span>
+              <strong>Duidelijk. Vindbaar. Snel.</strong>
             </div>
             <div className="mock-grid">
               <span className="tile-yellow" />
@@ -106,10 +150,25 @@ export default function Home() {
         </p>
       </section>
 
+      <section className="section" id="herkenbaar">
+        <div className="section-heading">
+          <p className="eyebrow">Herkenbaar?</p>
+          <h2>Een goede website maken is lastiger dan het lijkt.</h2>
+        </div>
+        <div className="service-grid">
+          {campingProblems.map((problem) => (
+            <article className="service-card" key={problem.title}>
+              <h3>{problem.title}</h3>
+              <p>{problem.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="section" id="websites">
         <div className="section-heading">
           <p className="eyebrow">Wat Zonder Gezeur doet</p>
-          <h2>Websites die er goed uitzien en praktisch werken.</h2>
+          <h2>Mooi. Duidelijk. Vindbaar.</h2>
         </div>
         <div className="service-grid">
           {services.map((service) => (
@@ -124,11 +183,13 @@ export default function Home() {
       <section className="split-section" id="werkwijze">
         <div>
           <p className="eyebrow">Werkwijze</p>
-          <h2>Duidelijk proces, korte lijnen.</h2>
+          <h2>
+            <span>Duidelijk proces.</span>
+            <span>Korte lijnen.</span>
+          </h2>
           <p>
-            Geen dik projectdocument voordat er iets zichtbaar is. We beginnen
-            met de kern, bouwen snel een echte eerste versie en scherpen daarna
-            gericht aan.
+            We beginnen met de kern, maken snel iets zichtbaar en scherpen
+            daarna gericht aan.
           </p>
         </div>
         <ol className="step-list">
@@ -140,13 +201,12 @@ export default function Home() {
 
       <section className="case-section" id="voorbeeld">
         <div className="case-copy">
-          <p className="eyebrow">Eerste voorbeeld</p>
-          <h2>Camping De Hanen als bewijs van aanpak.</h2>
+          <p className="eyebrow">Zo kan het eruitzien</p>
+          <h2>Minicamping Het Eekhoorntje: een voorbeeld van de aanpak.</h2>
           <p>
-            Een campingwebsite vraagt om sfeer, duidelijkheid en gemak op ieder
-            scherm. Precies die combinatie vormt ook de basis voor Zonder
-            Gezeur: mooi genoeg om indruk te maken, praktisch genoeg om snel te
-            gebruiken.
+            Dit is een demo-uitwerking, gebouwd om te laten zien hoe een
+            campingwebsite bij Zonder Gezeur eruitziet: sfeervol, snel, en
+            duidelijk voor gasten die op hun telefoon aan het zoeken zijn.
           </p>
         </div>
         <div className="proof-grid">
@@ -158,19 +218,55 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="section pricing-section" id="prijzen">
+        <div className="section-heading">
+          <p className="eyebrow">Investering</p>
+          <h2>Prijzen volgen later.</h2>
+        </div>
+        <p className="pricing-note">
+          De pakketten en maandelijkse kosten worden nog uitgewerkt. Het doel:
+          duidelijk weten waar je aan toe bent, zonder verrassingen achteraf.
+        </p>
+      </section>
+
+      <section className="faq-section" id="vragen">
+        <div className="section-heading">
+          <p className="eyebrow">Vragen vooraf</p>
+          <h2>Wat je vooraf wil weten.</h2>
+        </div>
+        <div className="faq-list">
+          {faqs.map((item) => (
+            <details key={item.question}>
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
       <section className="contact-section" id="contact">
         <div>
           <p className="eyebrow">Contact</p>
-          <h2>Zullen we je website strak neerzetten?</h2>
+          <h2>Klaar voor een betere website?</h2>
           <p>
-            Vertel kort wat je nodig hebt. Dan kijken we samen wat de snelste
-            route is naar een site die gezien mag worden.
+            Vertel kort wat je hebt en wat je anders wilt. Dan kijken we samen
+            naar de snelste route.
+          </p>
+          <p className="direct-contact">
+            Liever direct contact? Stuur een bericht via het formulier, dan
+            plannen we een belmoment.
           </p>
         </div>
         <div className="contact-panel">
           <ContactForm />
         </div>
       </section>
+      <footer className="business-footer">
+        <p>
+          Bedrijfsgegevens, KVK-nummer en algemene voorwaarden worden toegevoegd
+          zodra de definitieve gegevens vaststaan.
+        </p>
+      </footer>
     </main>
   );
 }
