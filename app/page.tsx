@@ -1,5 +1,5 @@
 import { ContactForm } from "./contact-form";
-import { MobileMenu } from "./mobile-menu";
+import { DesktopNav, MobileMenu } from "./mobile-menu";
 import { ScrollTopButton } from "./scroll-top-button";
 
 const services = [
@@ -81,14 +81,7 @@ export default function Home() {
           <span className="brand-logo" aria-hidden="true" />
           <span>Zonder Gezeur</span>
         </a>
-        <nav className="top-nav" aria-label="Hoofdnavigatie">
-          <a href="#websites">Websites</a>
-          <a href="#werkwijze">Werkwijze</a>
-          <a href="#voorbeeld">Voorbeeld</a>
-          <a href="#prijzen">Prijzen</a>
-          <a href="#vragen">Vragen</a>
-          <a href="#contact">Contact</a>
-        </nav>
+        <DesktopNav />
         <MobileMenu />
       </header>
 

@@ -11,6 +11,41 @@ const navItems = [
   { href: "#contact", label: "Contact" },
 ];
 
+function scrollToSection(href: string) {
+  const target = document.querySelector<HTMLElement>(href);
+
+  if (!target) {
+    return;
+  }
+
+  const header = document.querySelector<HTMLElement>(".site-header");
+  const headerBottom = header?.getBoundingClientRect().bottom ?? 0;
+  const gap = window.matchMedia("(max-width: 880px)").matches ? 10 : 14;
+  const top = target.getBoundingClientRect().top + window.scrollY - headerBottom - gap;
+
+  window.history.pushState(null, "", href);
+  window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+}
+
+export function DesktopNav() {
+  return (
+    <nav className="top-nav" aria-label="Hoofdnavigatie">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          key={item.href}
+          onClick={(event) => {
+            event.preventDefault();
+            scrollToSection(item.href);
+          }}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  );
+}
+
 export function MobileMenu() {
   const menuRef = useRef<HTMLDetailsElement>(null);
 
@@ -29,7 +64,15 @@ export function MobileMenu() {
       </summary>
       <nav aria-label="Mobiele navigatie">
         {navItems.map((item) => (
-          <a href={item.href} key={item.href} onClick={closeMenu}>
+          <a
+            href={item.href}
+            key={item.href}
+            onClick={(event) => {
+              event.preventDefault();
+              closeMenu();
+              scrollToSection(item.href);
+            }}
+          >
             {item.label}
           </a>
         ))}
