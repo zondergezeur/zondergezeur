@@ -20,7 +20,8 @@ function scrollToSection(href: string) {
 
   const header = document.querySelector<HTMLElement>(".site-header");
   const headerBottom = header?.getBoundingClientRect().bottom ?? 0;
-  const gap = window.matchMedia("(max-width: 880px)").matches ? 10 : 14;
+  const isMobile = window.matchMedia("(max-width: 880px)").matches;
+  const gap = isMobile && href === "#voorbeeld" ? 72 : isMobile ? 10 : 14;
   const top = target.getBoundingClientRect().top + window.scrollY - headerBottom - gap;
 
   window.history.pushState(null, "", href);
