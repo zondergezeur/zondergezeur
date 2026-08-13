@@ -104,6 +104,69 @@ main {
   color: var(--ink);
 }
 
+.mobile-menu {
+  display: none;
+  position: relative;
+}
+
+.mobile-menu summary {
+  align-items: center;
+  aspect-ratio: 1;
+  background: var(--ink);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  display: grid;
+  gap: 0.23rem;
+  height: 2.65rem;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  width: 2.65rem;
+}
+
+.mobile-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.mobile-menu summary::marker {
+  content: "";
+}
+
+.mobile-menu summary span {
+  background: var(--paper);
+  border-radius: 999px;
+  display: block;
+  height: 0.14rem;
+  width: 1.1rem;
+}
+
+.mobile-menu nav {
+  background: rgba(251, 255, 248, 0.98);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  box-shadow: 0 1rem 2.5rem rgba(22, 33, 31, 0.14);
+  display: grid;
+  gap: 0.25rem;
+  min-width: 12.5rem;
+  padding: 0.45rem;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.65rem);
+}
+
+.mobile-menu nav a {
+  border-radius: 0.75rem;
+  color: var(--ink);
+  font-size: 0.98rem;
+  font-weight: 800;
+  padding: 0.85rem 0.95rem;
+}
+
+.mobile-menu nav a:hover {
+  background: var(--coral);
+}
+
 .hero {
   align-items: center;
   display: grid;
@@ -1277,21 +1340,18 @@ h3 {
 
 @media (max-width: 880px) {
   .site-header {
-    align-items: stretch;
-    border-radius: 1.25rem;
-    flex-direction: column;
-    padding: 0.75rem;
+    border-radius: 999px;
+    gap: 0.75rem;
+    padding: 0.55rem 0.6rem;
+    top: 0.7rem;
   }
 
   .top-nav {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: none;
   }
 
-  .top-nav a {
-    font-size: 0.78rem;
-    padding: 0.6rem 0.45rem;
-    text-align: center;
+  .mobile-menu {
+    display: block;
   }
 
   .hero,
@@ -1307,7 +1367,7 @@ h3 {
 
   .hero {
     min-height: auto;
-    padding-top: 10.5rem;
+    padding-top: 7rem;
   }
 
   .hero-showcase {
@@ -1339,7 +1399,13 @@ h3 {
 
 @media (max-width: 520px) {
   .brand {
-    justify-content: center;
+    min-width: 0;
+  }
+
+  .brand span:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   h1 {

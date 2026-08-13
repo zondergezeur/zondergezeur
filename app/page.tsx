@@ -87,6 +87,21 @@ export default function Home() {
           <a href="#vragen">Vragen</a>
           <a href="#contact">Contact</a>
         </nav>
+        <details className="mobile-menu">
+          <summary aria-label="Open menu">
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+          </summary>
+          <nav aria-label="Mobiele navigatie">
+            <a href="#websites">Websites</a>
+            <a href="#werkwijze">Werkwijze</a>
+            <a href="#voorbeeld">Voorbeeld</a>
+            <a href="#prijzen">Prijzen</a>
+            <a href="#vragen">Vragen</a>
+            <a href="#contact">Contact</a>
+          </nav>
+        </details>
       </header>
 
       <section className="hero">
