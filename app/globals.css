@@ -710,6 +710,19 @@ h3 {
   margin-bottom: 0;
 }
 
+.site-footer {
+  background: var(--ink);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.88rem;
+  font-weight: 650;
+  padding: 1.25rem 1rem;
+  text-align: center;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
 @media (max-width: 880px) {
   .site-header {
     align-items: stretch;

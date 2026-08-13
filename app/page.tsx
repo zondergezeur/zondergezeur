@@ -171,6 +171,9 @@ export default function Home() {
           <ContactForm />
         </div>
       </section>
+      <footer className="site-footer">
+        <p>Controle: nieuwe GitHub en Vercel-koppeling actief.</p>
+      </footer>
     </main>
   );
 }
